@@ -1,8 +1,10 @@
 #include "ThreadPool.h"
+#include "Protocal.h"
+#include "JobManager.h"
 
 ThreadPool* ThreadPool::m_Instance = NULL;
 
-WorkThread::WorkThread()() {
+WorkThread::WorkThread() {
 }
 
 int WorkThread::svc() {
@@ -14,7 +16,7 @@ int WorkThread::svc() {
 		
 		//Handle the request in ACE_Message_Block
 		req request;
-		memcpy((void *)&request, mb->rd_ptr(). mb->length());
+		memcpy((void *)&request, mb->rd_ptr(), mb->length());
 		mb->release();
 		mb = NULL;
 		resp response;
@@ -43,17 +45,17 @@ ThreadPool* ThreadPool::getInstance(int minPoolSize, int maxPoolSize) {
 
 ThreadPool::ThreadPool(int minPoolSize, int maxPoolSize)
 :m_MinPoolSize(minPoolSize), 
-m_MaxPoolSize(maxPoolSize),
+m_MaxPoolSize(maxPoolSize) {
 }
 
 int ThreadPool::svc() {
 	WorkThread pool;
-	pool.activate(THR_NEW_LWP | THR_JOINABLE, minPoolSize);
+	pool.activate(THR_NEW_LWP | THR_JOINABLE, m_MinPoolSize);
 	
 	while (true) {
 		ACE_Message_Block* mb = NULL;
 		ACE_Time_Value tv((long)5000);
-		tv += ACE_OS::time(0);
+		//tv += ACE_OS::time(0);
 			
 		if (this->getq(mb, &tv) < 0) {
 			pool.msg_queue()->deactivate();
@@ -66,6 +68,6 @@ int ThreadPool::svc() {
 	return 0;
 }
 
-void ThreadPool::postMessage(ACE_Message_Block* mb) }
+void ThreadPool::postMessage(ACE_Message_Block* mb) {
 	this->putq(mb);
 }

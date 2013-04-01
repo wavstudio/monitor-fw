@@ -2,6 +2,7 @@
 #define JOB_MANAGER_H
 
 #include <map>
+#include "Job.h"
 
 class JobManager 
 {
@@ -11,9 +12,11 @@ public:
 	
 private:
 	JobManager();
-	JobManager* m_Instance;
+	static JobManager* m_Instance;
 	
-	std::map(int, Job*) mJobList;
+	std::map<int, Job* > m_JobList;
+	void init();
 };
 
 #endif   //JOB_MANAGER_H
+

@@ -8,16 +8,16 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 
-typedef ACE_Acceptor<ClientService, ACE_SOCK_ACCEPTOR> ClientAccepor;
-
 class ConnectionManager : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> 
 {
 public:
 	typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
 	
 	int open(void* = 0);
-	virtual int handler_input(ACE_HANDLE fd = ACE_INVALID_HANDLER);
+	virtual int handle_input(ACE_HANDLE fd = ACE_INVALID_HANDLE);
 	virtual int handle_close(ACE_HANDLE fd, ACE_Reactor_Mask mask);
 };
+
+typedef ACE_Acceptor<ConnectionManager, ACE_SOCK_ACCEPTOR> ClientAcceptor;
 
 #endif   //CONNECTION_MANAGER_H

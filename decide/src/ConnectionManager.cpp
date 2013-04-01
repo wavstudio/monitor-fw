@@ -1,4 +1,6 @@
 #include "ConnectionManager.h"
+#include "ThreadPool.h"
+#include <stdio.h>
 
 int ConnectionManager::open(void* p) {
 	if (super::open(p) == -1) {
@@ -24,7 +26,7 @@ int ConnectionManager::handle_input(ACE_HANDLE fd) {
 	//put received message into thread pool
 	ACE_Message_Block* mb = new ACE_Message_Block(recvBytes);
 	mb->copy(buffer, recvBytes);
-	ThreadPool::getInstance()->postMessage(mb);
+	ThreadPool::getInstance(10, 100)->postMessage(mb);
 	
 	return 0;
 }

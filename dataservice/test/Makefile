@@ -7,7 +7,7 @@ MV=mv
 
 INCLUDES=-I. -I/usr/include/cppunit
 LIB_PATH=-L/usr/lib/ -L../lib/ 
-LIBS=-lcppunit -ldataservice -lmysql
+LIBS=-lcppunit -ldataservice -lmysqlclient
 
 SOURCES=dataservicetester.cpp
 

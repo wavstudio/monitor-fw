@@ -1,6 +1,8 @@
 #ifndef THREAD_POOL_H
 #define THREAD_POOL_H
 
+#include "ace/Task.h"
+
 class WorkThread : public ACE_Task<ACE_MT_SYNCH> 
 {
 public:
