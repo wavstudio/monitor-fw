@@ -1,0 +1,11 @@
+*.out
+tags
+*.o
+dataservice/bin/dataservicetester
+dataservice/tester/dataservicetester
+dataservice/lib/libdataservice.so
+dataservice/src/libdataservice.so
+decide/bin/decide
+decide/src/decide
+decide/bin/decidetester
+decide/test/decidetester
